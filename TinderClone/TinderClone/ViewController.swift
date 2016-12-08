@@ -13,13 +13,29 @@ import Parse
 class ViewController: UIViewController {
     
     var SignUpMode = true
+    var activityIndicator = UIActivityIndicatorView()
+ 
+    
     
     func CreateAlert(title : String, message: String) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.actionSheet)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }))
+            
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func Indicator() {
         
+        activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
     }
     
     
@@ -40,9 +56,67 @@ class ViewController: UIViewController {
         
         if usernameTextField.text == "" || passwordTextField.text == "" {
             CreateAlert(title: "ALERT", message: "Please, enter your login and password")
+        } else {
+            Indicator()
+            
+            if SignUpMode {
+                let user = PFUser()
+                user.username = usernameTextField.text
+                user.password = passwordTextField.text
+                
+                user.signUpInBackground(block: { (success, error) in
+                    
+                    if error != nil {
+                        
+                        let error = error as NSError?
+                        
+                        if let parseError = error?.userInfo["error"] as? String{
+                             self.CreateAlert(title: "Uh oh!!", message: parseError)
+                        }
+                        
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
+                        
+                    }else{
+                        
+                        self.CreateAlert(title: "Sign up!", message: "uhu!")
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
+
+                    }
+                })
+                
+                
+            } else {
+                
+                PFUser.logInWithUsername(inBackground: usernameTextField.text!, password: passwordTextField.text!, block: { (user, error) in
+                    
+                    if error != nil {
+                        
+                        let error = error as NSError?
+                        
+                        if let parseError = error?.userInfo["error"] as? String {
+                            
+                            self.CreateAlert(title: "OPS", message: parseError)
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.shared.endIgnoringInteractionEvents()
+                        }
+                        
+                        }else{
+                            
+                            self.CreateAlert(title: "YAY", message: "Time to meet some people!")
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.shared.endIgnoringInteractionEvents()
+                        }
+                        
+                    
+                    
+                })
+                
+                 }
+            
+            //login user
         }
-        
-        
     }
     
  
@@ -51,20 +125,20 @@ class ViewController: UIViewController {
         
         if SignUpMode{
             //Change to login mode
-            
+            SignUpMode = false
             signUpOrLoginButton.setTitle("Login", for: [])
             changeSignUpButton.setTitle("Sign Up", for: [])
             messageLabel.text = "Don't have an account?"
-            SignUpMode = false
+            
             
         } else {
             
             //Change to sign up mode
-        
+            SignUpMode = true
             signUpOrLoginButton.setTitle("Sign Up", for: [])
             changeSignUpButton.setTitle("Login", for: [])
             messageLabel.text = "Already have an account?"
-            SignUpMode = true
+            
         }
         
     }
