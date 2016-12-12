@@ -45,7 +45,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var passwordTextField: UITextField!
     
-
+    
+    
     @IBOutlet weak var signUpOrLoginButton: UIButton!
 
     
@@ -53,7 +54,7 @@ class ViewController: UIViewController {
     
     
     @IBAction func signUpOrLoginButton(_ sender: Any) {
-        
+   
         if usernameTextField.text == "" || passwordTextField.text == "" {
             CreateAlert(title: "ALERT", message: "Please, enter your login and password")
         } else {
@@ -63,6 +64,9 @@ class ViewController: UIViewController {
                 let user = PFUser()
                 user.username = usernameTextField.text
                 user.password = passwordTextField.text
+                let acl = PFACL()
+                acl.getPublicWriteAccess = true
+                user.acl = acl
                 
                 user.signUpInBackground(block: { (success, error) in
                     
@@ -82,6 +86,7 @@ class ViewController: UIViewController {
                         self.CreateAlert(title: "Sign up!", message: "uhu!")
                         self.activityIndicator.stopAnimating()
                         UIApplication.shared.endIgnoringInteractionEvents()
+                        self.performSegue(withIdentifier: "goToUserInfo", sender: self)
 
                     }
                 })
@@ -119,6 +124,13 @@ class ViewController: UIViewController {
         }
     }
     
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if PFUser.current() != nil {
+            performSegue(withIdentifier: "goToUserInfo", sender: self)
+        }
+    }
+    
  
     @IBAction func changeSignUpButton(_ sender: Any) {
         
@@ -146,8 +158,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
+
        
     }
 
