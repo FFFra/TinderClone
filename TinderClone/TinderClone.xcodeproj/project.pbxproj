@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D19EBD91E0084DF009067D2 /* SwipingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D19EBD81E0084DF009067D2 /* SwipingViewController.swift */; };
 		3DF3C4E91DFEF25F00B13C62 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF3C4E81DFEF25F00B13C62 /* UserDetailsViewController.swift */; };
 		3DF3C4EB1DFEF33400B13C62 /* Nomad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DF3C4EA1DFEF33400B13C62 /* Nomad.png */; };
 		814C3ACA1B69877600E307BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC61B69877600E307BB /* Main.storyboard */; };
@@ -22,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D19EBD81E0084DF009067D2 /* SwipingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipingViewController.swift; sourceTree = "<group>"; };
+		3DC560661E0173A600BBCCA6 /* TinderClone.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TinderClone.entitlements; sourceTree = "<group>"; };
 		3DF3C4E81DFEF25F00B13C62 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
 		3DF3C4EA1DFEF33400B13C62 /* Nomad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Nomad.png; sourceTree = "<group>"; };
 		814C3AC71B69877600E307BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -87,9 +90,11 @@
 		81BA81471A49DA1800E65899 /* TinderClone */ = {
 			isa = PBXGroup;
 			children = (
+				3DC560661E0173A600BBCCA6 /* TinderClone.entitlements */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				81BA814C1A49DA1800E65899 /* ViewController.swift */,
 				814C3AC61B69877600E307BB /* Main.storyboard */,
+				3D19EBD81E0084DF009067D2 /* SwipingViewController.swift */,
 				3DF3C4E81DFEF25F00B13C62 /* UserDetailsViewController.swift */,
 				3DF3C4EA1DFEF33400B13C62 /* Nomad.png */,
 			);
@@ -151,7 +156,13 @@
 				TargetAttributes = {
 					81BA81441A49DA1800E65899 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 6EQ9XMYW83;
 						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -193,6 +204,7 @@
 			files = (
 				81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
+				3D19EBD91E0084DF009067D2 /* SwipingViewController.swift in Sources */,
 				3DF3C4E91DFEF25F00B13C62 /* UserDetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,6 +311,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = 6EQ9XMYW83;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -316,6 +329,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = 6EQ9XMYW83;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

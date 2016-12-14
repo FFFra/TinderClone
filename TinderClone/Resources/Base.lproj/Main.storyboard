@@ -28,14 +28,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Flavio" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XkB-qE-H8u">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="flavio" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XkB-qE-H8u">
                                 <rect key="frame" x="16" y="136" width="288" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="senha" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Xr-EQ-rWI">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="password" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Xr-EQ-rWI">
                                 <rect key="frame" x="16" y="197" width="288" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
@@ -75,11 +75,12 @@
                         <outlet property="signUpOrLoginButton" destination="OM2-f8-rGr" id="eyh-Lc-Y2P"/>
                         <outlet property="usernameTextField" destination="XkB-qE-H8u" id="MrM-aA-Lo8"/>
                         <segue destination="XQ0-E1-t38" kind="show" identifier="goToUserInfo" id="zgl-AA-EE0"/>
+                        <segue destination="bF0-H2-jv9" kind="show" identifier="swipeFromInitialSegue" id="qqN-na-Tzt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-373.125" y="151.05633802816902"/>
+            <point key="canvasLocation" x="-949" y="93"/>
         </scene>
         <!--User Details View Controller-->
         <scene sceneID="Ki1-7A-u1c">
@@ -174,14 +175,65 @@
                         <outlet property="genderSwitch" destination="xRg-xi-fMH" id="EFF-nK-xEc"/>
                         <outlet property="interestedInSwitch" destination="c8t-O4-9iy" id="Jey-7w-12O"/>
                         <outlet property="userImage" destination="DLk-8a-0b2" id="yXl-4A-vOx"/>
+                        <segue destination="bF0-H2-jv9" kind="show" identifier="showSwipingViewController" id="qd3-dp-vxb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EZN-Fo-yzt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="326.25" y="145.77464788732394"/>
         </scene>
+        <!--Swiping View Controller-->
+        <scene sceneID="efQ-D3-hBs">
+            <objects>
+                <viewController id="bF0-H2-jv9" customClass="SwipingViewController" customModule="TinderClone" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="exa-gT-dyg"/>
+                        <viewControllerLayoutGuide type="bottom" id="t3h-on-Did"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yY7-A0-Nao">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RJv-LX-NKX">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="TinderClone" id="2YM-5a-KAy">
+                                        <barButtonItem key="leftBarButtonItem" title="Logout" id="9eP-dc-Fz2">
+                                            <connections>
+                                                <segue destination="BYZ-38-t0r" kind="show" identifier="logoutSegue" id="X9q-jt-HzF"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Nomad.png" translatesAutoresizingMaskIntoConstraints="NO" id="H1z-mK-Cho">
+                                <rect key="frame" x="41" y="86" width="239" height="288"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Swipe left to reject, right to accept" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMn-Vm-kFK">
+                                <rect key="frame" x="0.0" y="441" width="320" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="H1z-mK-Cho" id="NSb-2M-qwB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JnA-iy-2us" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1321.875" y="113.02816901408451"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Nomad.png" width="400" height="383"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="qqN-na-Tzt"/>
+    </inferredMetricsTieBreakers>
 </document>

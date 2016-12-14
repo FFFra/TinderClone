@@ -45,27 +45,34 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var passwordTextField: UITextField!
     
-    
-    
     @IBOutlet weak var signUpOrLoginButton: UIButton!
 
-    
     @IBOutlet weak var changeSignUpButton: UIButton!
-    
     
     @IBAction func signUpOrLoginButton(_ sender: Any) {
    
         if usernameTextField.text == "" || passwordTextField.text == "" {
             CreateAlert(title: "ALERT", message: "Please, enter your login and password")
-        } else {
-            Indicator()
             
+        } else {
+            
+            Indicator()
+        }
+        
+        
+        
             if SignUpMode {
+                
                 let user = PFUser()
+                
                 user.username = usernameTextField.text
                 user.password = passwordTextField.text
+                
                 let acl = PFACL()
+                
                 acl.getPublicWriteAccess = true
+                acl.getPublicReadAccess = true
+                
                 user.acl = acl
                 
                 user.signUpInBackground(block: { (success, error) in
@@ -74,24 +81,26 @@ class ViewController: UIViewController {
                         
                         let error = error as NSError?
                         
-                        if let parseError = error?.userInfo["error"] as? String{
+                        if let parseError = error?.userInfo["error"] as? String {
+                            
                              self.CreateAlert(title: "Uh oh!!", message: parseError)
                         }
                         
                         self.activityIndicator.stopAnimating()
                         UIApplication.shared.endIgnoringInteractionEvents()
                         
-                    }else{
+                    } else {
                         
                         self.CreateAlert(title: "Sign up!", message: "uhu!")
                         self.activityIndicator.stopAnimating()
                         UIApplication.shared.endIgnoringInteractionEvents()
+                        
                         self.performSegue(withIdentifier: "goToUserInfo", sender: self)
-
                     }
+                
                 })
-                
-                
+        
+        
             } else {
                 
                 PFUser.logInWithUsername(inBackground: usernameTextField.text!, password: passwordTextField.text!, block: { (user, error) in
@@ -106,31 +115,48 @@ class ViewController: UIViewController {
                             self.activityIndicator.stopAnimating()
                             UIApplication.shared.endIgnoringInteractionEvents()
                         }
-                        
-                        }else{
+                    
+                    
+                    
+                        } else {
                             
                             self.CreateAlert(title: "YAY", message: "Time to meet some people!")
                             self.activityIndicator.stopAnimating()
                             UIApplication.shared.endIgnoringInteractionEvents()
-                        }
                         
+                            self.redirectUser()
                     
+                    }
                     
                 })
                 
-                 }
-            
-            //login user
+            }
         }
-    }
     
     
     override func viewDidAppear(_ animated: Bool) {
-        if PFUser.current() != nil {
-            performSegue(withIdentifier: "goToUserInfo", sender: self)
-        }
+        
+        redirectUser()
     }
     
+    
+    
+    func redirectUser() {
+    
+        if PFUser.current() != nil {
+            
+            if PFUser.current()?["isFemale"] != nil && PFUser.current()?["isInterestedInWomen"] != nil && PFUser.current()?["photo"] != nil {
+                
+                 performSegue(withIdentifier: "swipeFromInitialSegue", sender: self)
+                
+            } else {
+            
+                 performSegue(withIdentifier: "goToUserInfo", sender: self)
+            
+            }
+        }
+    
+    }
  
     @IBAction func changeSignUpButton(_ sender: Any) {
         

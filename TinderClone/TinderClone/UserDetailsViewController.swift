@@ -12,8 +12,6 @@ import Parse
 class UserDetailsViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     
-    
-    
     @IBOutlet weak var userImage: UIImageView!
     
     
@@ -44,6 +42,7 @@ class UserDetailsViewController: UIViewController, UINavigationControllerDelegat
     
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
             userImage.image = image
         }
@@ -57,6 +56,7 @@ class UserDetailsViewController: UIViewController, UINavigationControllerDelegat
     @IBOutlet weak var interestedInSwitch: UISwitch!
     
     @IBAction func update(_ sender: Any) {
+        
         PFUser.current()?["isFemale"] = genderSwitch.isOn
         
         PFUser.current()?["isInterestedInWomen"] = interestedInSwitch.isOn
@@ -84,8 +84,9 @@ class UserDetailsViewController: UIViewController, UINavigationControllerDelegat
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 
+                self.performSegue(withIdentifier: "showSwipingViewController", sender: self)
+                
             }
-
             
         })
         
@@ -102,63 +103,68 @@ class UserDetailsViewController: UIViewController, UINavigationControllerDelegat
         }
         
         if let isInterestedInWomen = PFUser.current()?["isInterestedInWomen"] as? Bool {
+            
             interestedInSwitch.setOn(isInterestedInWomen, animated: false)
         }
         
         if let photo = PFUser.current()?["photo"] as? PFFile {
             
             photo.getDataInBackground(block: { (data, error) in
+                
                 if let imageData = data {
-                    if let downloadedImage = UIImage(data: imageData){
+                    
+                    if let downloadedImage = UIImage(data: imageData) {
+                        
                         self.userImage.image = downloadedImage
                     }
                 }
             })
         }
    
-        let urlArray = ["https://staticdelivery.nexusmods.com/mods/1151/images/9853-1-1455347533.jpg", "https://s3.amazonaws.com/cvproducts/CeceliaRobot.jpg", "https://blenderartists.org/forum/attachment.php?attachmentid=215713&d=1360221098", "http://www.episodeseason.com/digital-art/robot-girls/binary-concubine-by-conzpiracy.jpg", "http://www.bandt.com.au/information/uploads/2016/04/melissa-overman-750x500.jpg"]
-        var counter = 0
+//        let urlArray = ["https://staticdelivery.nexusmods.com/mods/1151/images/9853-1-1455347533.jpg", "https://s3.amazonaws.com/cvproducts/CeceliaRobot.jpg", "https://blenderartists.org/forum/attachment.php?attachmentid=215713&d=1360221098", "http://www.episodeseason.com/digital-art/robot-girls/binary-concubine-by-conzpiracy.jpg", "http://www.bandt.com.au/information/uploads/2016/04/melissa-overman-750x500.jpg"]
+//        var counter = 0
+//        
+//        for urlString in urlArray {
+//            
+//            counter += 1
+//            
+//            let url = URL(string: urlString)
+//            
+//            do {
+//            
+//                let data = try Data(contentsOf: url!)
+//                
+//                let imageFile = PFFile(name: "photo.png", data: data)
+//                let user = PFUser()
+//                
+//                user["photo"] = imageFile
+//                
+//                user.username = String(counter)
+//                
+//                user.password = "password"
+//                
+//                user["isInterestedInWomen"] = false
+//                
+//                user["isFemale"] = true
+//                
+//                let acl = PFACL()
+//                acl.getPublicWriteAccess = true
+//                user.acl = acl
+//                
+//                user.signUpInBackground(block: { (success, error) in
+//                    
+//                    if success {
+//                        print("new user signed up")
+//                    }
+//                })
+//                
+//                
+//            } catch {
+//                print ("Could not get data")
+//            }
+//        }
         
-        for urlString in urlArray {
-            
-            counter += 1
-            
-            let url = URL(string: urlString)
-            
-            do {
-            
-                let data = try Data(contentsOf: url!)
-                
-                let imageFile = PFFile(name: "photo.png", data: data)
-                let user = PFUser()
-                
-                user["photo"] = imageFile
-                
-                user.username = String(counter)
-                
-                user.password = "password"
-                
-                user["isInterestedInWomen"] = false
-                
-                user["isFemale"] = true
-                
-                let acl = PFACL()
-                acl.getPublicWriteAccess = true
-                user.acl = acl
-                
-                user.signUpInBackground(block: { (success, error) in
-                    
-                    if success {
-                        print("new user signed up")
-                    }
-                })
-                
-                
-            } catch {
-                print ("Could not get data")
-            }
-        }
-        
+    
     }
 
     
@@ -167,15 +173,5 @@ class UserDetailsViewController: UIViewController, UINavigationControllerDelegat
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
